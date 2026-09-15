@@ -7,6 +7,7 @@ public class GameEngine {
     private GuessHistory history;
     private Code secret;
     private boolean testMode;
+    private boolean playing;
     java.util.Scanner scanner = new java.util.Scanner(System.in);
 
     public GameEngine(GameConfiguration config, SecretGenerator secretGenerator,
@@ -15,10 +16,12 @@ public class GameEngine {
         this.secretGenerator = secretGenerator;
         this.scorer = scorer;
         this.testMode = testMode;
-        history = new GuessHistory();
+        playing = true;
     }
+
     public void playGame(){
         secret = secretGenerator.generate(config);
+        history = new GuessHistory();
         if(testMode){
             System.out.println("The secret code is " + secret);
         }
@@ -53,6 +56,17 @@ public class GameEngine {
             }
         }
     }
+
+    public void run(){
+        while(playing){
+            playGame();
+            System.out.println("Would you like to play again? Y/N");
+            if(scanner.nextLine().equalsIgnoreCase("N")){
+                playing = false;
+            }
+        }
+    }
+
     private boolean isValidColors(String input) {
         char[] colors = config.getColors();
         for (int i = 0; i < input.length(); i++) {
