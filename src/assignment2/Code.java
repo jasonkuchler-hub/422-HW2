@@ -27,4 +27,8 @@ public class Code {
     public char getChar(int index){
         return code[index];
     }
+    @Override
+    public String toString() {
+        return new String(code);
+    }
 }
