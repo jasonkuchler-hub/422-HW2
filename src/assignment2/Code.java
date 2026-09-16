@@ -8,19 +8,6 @@ public class Code {
         length = code.length;
     }
 
-    public boolean compare(Code c){
-        if (this.getLength()==c.getLength()){
-            for(int i = 0; i < this.getLength(); i++){
-                if (this.getChar(i) == c.getChar(i)){
-                }
-                else{
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
     public int getLength(){
         return length;
     }
