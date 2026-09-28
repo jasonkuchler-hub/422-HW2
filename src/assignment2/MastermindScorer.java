@@ -5,28 +5,20 @@ public class MastermindScorer implements FeedbackScorer {
         if (secret.getLength() != guess.getLength()) {
             throw new IllegalArgumentException("secret and guess must be the same length");
         }
+
+        PositionMatcher.MatchType[] results = PositionMatcher.match(secret, guess);
+
         int blackPegCount = 0;
         int whitePegCount = 0;
-        boolean[] secretBool = new boolean[secret.getLength()];
-        boolean[] guessBool = new boolean[guess.getLength()];
-        for(int i= 0; i < secret.getLength(); i ++){
-            if(secret.getChar(i)==guess.getChar(i)){
+
+        for (PositionMatcher.MatchType result : results) {
+            if (result == PositionMatcher.MatchType.EXACT) {
                 blackPegCount++;
-                secretBool[i] = true;
-                guessBool[i] = true;
+            } else if (result == PositionMatcher.MatchType.PARTIAL) {
+                whitePegCount++;
             }
         }
-        for(int i = 0; i < guess.getLength(); i++){
-            if(!guessBool[i]){
-                for(int j = 0; j < secret.getLength(); j++){
-                    if((!secretBool[j]) &&(guess.getChar(i) == secret.getChar(j)) ){
-                        whitePegCount++;
-                        secretBool[j] = true;
-                        break;
-                    }
-                }
-            }
-        }
+
         return new MastermindFeedback(blackPegCount, whitePegCount, guess.getLength());
     }
 }
