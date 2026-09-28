@@ -8,7 +8,8 @@ public class Driver {
         GameConfiguration config = new GameConfiguration();
         MastermindScorer scorer = new MastermindScorer();
         RandomSecretGenerator secretGenerator = new RandomSecretGenerator();
-        GameEngine engine = new GameEngine(config, secretGenerator, scorer, testMode);
+        MastermindValidator validator = new MastermindValidator();
+        GameEngine engine = new GameEngine(config, secretGenerator, scorer, testMode, validator);
         engine.run();
     }
 }

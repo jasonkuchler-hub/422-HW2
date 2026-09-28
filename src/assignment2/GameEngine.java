@@ -1,21 +1,23 @@
 package assignment2;
 
 public class GameEngine {
-    private GameConfiguration config;
-    private SecretGenerator secretGenerator;
-    private FeedbackScorer scorer;
+    private final GameConfiguration config;
+    private final SecretGenerator secretGenerator;
+    private final FeedbackScorer scorer;
     private GuessHistory history;
+    private final GuessValidator validator;
     private Code secret;
-    private boolean testMode;
+    private final boolean testMode;
     private boolean playing;
     java.util.Scanner scanner = new java.util.Scanner(System.in);
 
     public GameEngine(GameConfiguration config, SecretGenerator secretGenerator,
-                      FeedbackScorer scorer, boolean testMode) {
+                      FeedbackScorer scorer, boolean testMode, GuessValidator validator) {
         this.config = config;
         this.secretGenerator = secretGenerator;
         this.scorer = scorer;
         this.testMode = testMode;
+        this.validator = validator;
         playing = true;
     }
 
@@ -32,12 +34,8 @@ public class GameEngine {
                 System.out.println(history);
                 continue;
             }
-            else if(input.length() != config.getNumPegs()){
-                System.out.println("Your guess does not match the required length.");
-                continue;
-            }
-            else if(!isValidColors(input)){
-                System.out.println("Your guess contains invalid colors.");
+            else if(!validator.isValid(input, config)){
+                System.out.println("Your guess is invalid.");
                 continue;
             }
             else{
@@ -65,22 +63,5 @@ public class GameEngine {
                 playing = false;
             }
         }
-    }
-
-    private boolean isValidColors(String input) {
-        char[] colors = config.getColors();
-        for (int i = 0; i < input.length(); i++) {
-            boolean found = false;
-            for(int j = 0; j < colors.length; j++){
-                if (input.charAt(i) == colors[j]){
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                return false;
-            }
-        }
-        return true;
     }
 }
