@@ -22,6 +22,8 @@ public class Driver {
             GameConfiguration config = new GameConfiguration(6, 5, alphabet);
             WordList wordList = new WordList("data/wordlist.txt");
             WordleScorer scorer = new WordleScorer();
+            //Code fixedSecret = new Code("APPLE".toCharArray());
+            //SecretGenerator secretGenerator = new FixedSecretGenerator(fixedSecret);
             WordleSecretGenerator secretGenerator = new WordleSecretGenerator(wordList);
             WordleValidator validator = new WordleValidator(wordList);
             GameEngine engine = new GameEngine(config, secretGenerator, scorer, testMode, validator);

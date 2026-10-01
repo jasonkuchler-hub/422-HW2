@@ -30,6 +30,7 @@ public class GameEngine {
         while(true){
             System.out.print("Please enter your  guess: ");
             String input = scanner.nextLine();
+            input = input.toUpperCase();
             if(input.equals("HISTORY")){
                 System.out.println(history);
                 continue;
